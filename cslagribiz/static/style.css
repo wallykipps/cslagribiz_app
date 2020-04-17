@@ -1,5 +1,5 @@
 /*Navbarstyling*/
-#wrapper{
+
 /*  border: 2px solid red;*/
 }
 
@@ -7,7 +7,7 @@
 
   padding:0;
   width: 100%;
-  /*border: 2px solid red;*/
+/*  border: 2px solid red;*/
 }
 
 /*Sidebar*/
@@ -29,7 +29,7 @@
   padding: 0;
   padding-left: 200px;
   overflow-y:hidden;
-  
+
 
  /*border: 5px solid green;*/
 }
