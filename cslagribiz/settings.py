@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'production.apps.ProductionConfig',
     'expenses.apps.ExpensesConfig',
     'sales.apps.SalesConfig',
+    'customers.apps.CustomersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -3,3 +3,8 @@ $("#menu-toggle").click(function(e){
   $("#wrapper").toggleClass("menuDisplayed");
 
 });
+
+function myFunction() {
+  document.getElementById("myForm").submit();
+  document.getElementById("salesform").reset();
+}

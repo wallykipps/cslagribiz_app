@@ -79,17 +79,34 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="#productionmenu" data-toggle="collapse" aria-expanded="false">
                 <i class="iconify" data-icon="jam:eggs-f" data-inline="false" data-height="16"></i>
                 <span class="text">Production</span>
+                <i class="fas fa-caret-down"></i>
               </a>
+              <ul class="collapse list-unstyled ml-4" id="productionmenu" style="font-size:13px">
+               <li><a href="{% url 'sales' %}"><i class="fas fa-caret-right mr-1"></i>Data Entry</a></li>
+               <li><a href="#"><i class="fas fa-caret-right mr-1"></i>Production</a></li>
+
+           </ul>
+
+
             </li>
 
+
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'sales' %}">
+              <a class="nav-link" href="#salesmenu" data-toggle="collapse" aria-expanded="false" >
                 <i class="iconify" data-icon="simple-line-icons:wallet" data-inline="false" data-height="16"></i>
                 <span class="text">Sales</span>
+                <i class="fas fa-caret-down"></i>
               </a>
+
+              <ul class="collapse list-unstyled ml-4" id="salesmenu">
+               <li><a href="{% url 'salesform' %}"><i class="fas fa-caret-right mr-1"></i>Data Entry</a></li>
+               <li><a href="{% url 'sales' %}"><i class="fas fa-caret-right mr-1"></i>Sales</a></li>
+               <li><a href="{% url 'customers'%}"><i class="fas fa-caret-right mr-1"></i>Customers</a></li>
+           </ul>
+
             </li>
 
             <li class="nav-item">
@@ -127,7 +144,7 @@
       {%block content%}
       {%endblock%}
     </div>
-<footer class="text-muted">
+<footer class="text-muted border border-right-0 border-top-0 border-bottom-0">
     <div class="container-fluid text-center text-muted bg-light" id="footer">
       <p> Copyright @Wally {%now "Y"%}  </p>
     </div>

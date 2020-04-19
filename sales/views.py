@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import Sales
 
 
+
 def sales(request):
     sales=Sales.objects
     return render (request, 'sales/sales.html',{'sales':sales})
