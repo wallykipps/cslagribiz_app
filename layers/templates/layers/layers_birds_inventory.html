@@ -1,0 +1,342 @@
+{% extends "dashboard/layout.html" %}
+{% block content %}
+
+<div class="row">
+  <div class="col-3 pt-4">
+    <h3><i class="fas fa-table mr-3"></i>Birds Inventory</h3>
+  </div>
+
+  <div class="container col-9 pt-4" >
+    <button type="button" class="btn btn-outline-secondary btn-sm mr-1 float-right ml-1 "data-toggle="modal" data-target="#birds_stock_count"> <i class="fas fa-download mr-2"></i>Stock Count</button>
+    <!-- <a href="{%url 'layers_customers'%}" class="btn btn-outline-primary btn-sm ml-1 float-right mr-1" role="button"><i class="fas fa-users mr-2"></i>Customers</a> -->
+    <a class="btn btn-outline-success btn-sm ml-1 float-right mr-1 modal_input_status" href="{% url 'add_layers_stock_movement' %}" data-toggle="modal" data-target="#layersInventory" id="layersInventoryBtn"><i class="iconify" data-icon="gridicons:add" data-inline="false" data-height="18"></i>Manage Stock</a>
+  </div>
+
+</div>
+<hr></hr>
+
+
+
+  <!-- The Modal -->
+  <div class="modal fade" id="layersInventory">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Birds Inventory Form</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+        </div>
+
+        <div class="custom-control custom-checkbox ml-3">
+          <input type="checkbox" class="custom-control-input inputstatusChkBx" id="inputStatusChkBx" value="">
+          <label class="custom-control-label  text-muted" for="inputStatusChkBx">Click to enable or disable actual stock count!</label>
+        </div>
+
+        <form method="post" id="layersInventoryForm" action="{% url 'add_layers_stock_movement'%}">
+          {% csrf_token %}
+
+        <!-- Modal body -->
+        <div class="modal-body">
+
+          <div class="form-row ml-1">
+            <h5 class="text-secondary">Enterprise Details:</h5>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <label class="sr-only" for="date">Date</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                </div>
+                {{birds_inventory_form.stock_date}}
+              </div>
+            </div>
+
+            <div class="col-6">
+              <label class="sr-only" for="salesperson">Sales Person</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="far fa-user-circle"></i></div>
+                </div>
+                {{birds_inventory_form.staff}}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="sr-only" for="enterprise_type">Enterprise Type</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-industry"></i></div>
+                </div>
+                {{birds_inventory_form.enterprise_type}}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="sr-only" for="enterprise_unit">Enterprise Unit</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-igloo"></i></div>
+                </div>
+                {{birds_inventory_form.section}}
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-row mt-2 ml-1">
+            <h5 class="text-secondary">Stock Movement Details:</h5>
+          </div>
+
+          <div class="row">
+            <div class="col-6">
+              <label class="sr-only" for="product">Gross</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-dolly"></i></div>
+                </div>
+                {{birds_inventory_form.stock_movement_type}}
+              </div>
+            </div>
+
+            <div class="col-6">
+              <label class="sr-only" for="units">Defects</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text "><i class="fas fa-notes-medical"></i></div>
+                </div>
+                  {{birds_inventory_form.stock_movement_reason}}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="col-6">
+              <label class="sr-only" for="unitprice">Broken</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-crow"></i></div>
+                </div>
+                {{birds_inventory_form.birds}}
+              </div>
+            </div>
+
+            <div class="col-6">
+              <label class="sr-only" for="unitprice">Broken</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-sticky-note"></i></div>
+                </div>
+                {{birds_inventory_form.stock_movement_notes}}
+              </div>
+            </div>
+
+          </div>
+
+          <div class="form-row ml-1">
+            <h5 class="text-secondary">Stock Count:</h5>
+          </div>
+              <div class="row">
+                <div class="col-8">
+                  <label class="sr-only" for="stock_count">Stock Count</label>
+                  <div class="input-group mb-2 mr-2">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text"><i class="fas fa-crow"></i></div>
+                    </div>
+                    {{birds_inventory_form.birds_stock_actual}}
+                  </div>
+                </div>
+
+
+
+                </div>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+
+          <button class="btn btn-success ml-2" type="submit" id="btnSubmit"><i class="fas fa-save"></i> Submit</button>
+          <button class="btn btn-warning ml-2" id="btnReset" type="reset"><i class="fas fa-undo-alt"></i> Reset</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+
+        </div>
+
+          </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+<!-- Stock count -->
+<div class="modal fade modal" id='birds_stock_count' tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h4 class="modal-title">Birds Stock Count</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped table-sm border" id="sales" data-toggle="table"   data-pagination="true" data-search="true">
+          <thead class="table-secondary">
+            <tr>
+              <th>Date</th>
+              <!-- <th>Enterprise Type</th> -->
+              <th>Enterprise Unit</th>
+              <th>Stock Taker</th>
+              <th class="text-center"> Calculated Stock Balance</th>
+              <th class="text-center"> Actual Stock Count</th>
+              <th class="text-center"> Variance</th>
+
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for obj in layers_stock_count%}
+
+            <tr>
+
+              <td class="font-weight-light">{{obj.stock_date}}</td>
+              <td class="font-weight-light">{{obj.section}}</td>
+              <td class="font-weight-light">{{obj.staff}}</td>
+              <td class="font-weight-light text-center">{{obj.birds_stock_cumulative}}</td>
+              <td class="font-weight-light text-center">{{obj.birds_stock_actual}}</td>
+              <td class="font-weight-light text-center">{{obj.birds_stock_variance}}</td>
+
+            </tr>
+      {% endfor %}
+          </tbody>
+        </table>
+        </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  </div>
+<div class="row">
+  <div class="col">
+    <!--<a href="#" class="btn btn-success" id="menu-toggle">Toggle Menu</span></a>-->
+
+    <div class="table-responsive">
+      <table class="table table-striped table-sm border" id="sales" data-toggle="table"   data-pagination="true" data-search="true">
+        <thead class="table-secondary">
+          <tr>
+            <th>Date</th>
+            <!-- <th>Enterprise Type</th> -->
+            <th>Enterprise Unit</th>
+            <th>Stock Taker</th>
+            <th>Type of Movement</th>
+            <th class="text-center">Stock In</th>
+            <th class="text-center">Stock Out</th>
+            <th class="text-center"> Stock Balance</th>
+
+
+          </tr>
+        </thead>
+        <tbody>
+
+          {% for obj in layers_inventory_queryset%}
+
+          <tr>
+
+            <td class="font-weight-light">{{obj.stock_date}}</td>
+            <td class="font-weight-light">{{obj.section}}</td>
+            <td class="font-weight-light">{{obj.staff}}</td>
+            <td class="font-weight-light">{{obj.stock_movement_reason}}</td>
+            <td class="font-weight-light text-center">{{obj.birds_stock_in}}</td>
+            <td class="font-weight-light text-center">{{obj.birds_stock_out}}</td>
+            <td class="font-weight-light text-center">{{obj.birds_stock_cumulative}}</td>
+
+
+            <!-- <td class="font-weight-light">{{obj.stock_date}}</td>
+            <td class="font-weight-light">{{obj.section}}</td>
+            <td class="font-weight-light">{{obj.staff}}</td>
+            <td class="font-weight-light">{{obj.stock_movement_reason}}</td>
+            <td class="font-weight-light text-center">{{obj.birds_stock_in}}</td>
+            <td class="font-weight-light text-center">{{obj.birds_stock_out}}</td>
+            <td class="font-weight-light text-center">{{obj.cumulative_sum}}</td> -->
+
+          </tr>
+    {% endfor %}
+        </tbody>
+      </table>
+      </div>
+
+
+
+
+
+
+
+    <!--
+    <div class="card mb-4">
+    <div class="card-header bg-secondary"><i class="fas fa-table mr-1"></i>Sales Records</div>
+    <div class="card-body">
+
+  </div>
+</div>
+-->
+
+
+</div>
+</div>
+
+<div class="row">
+  <!-- <div class="col-lg-12">
+
+    <div class="table-responsive">
+      <table class="table table-striped table-sm border" id="sales" data-toggle="table"   data-pagination="true" data-search="true">
+        <thead class="table-secondary">
+          <tr>
+            <th>Date</th>
+            <th>Enterprise Type</th>
+            <th>Enterprise Unit</th>
+            <th>Stock Taker</th>
+            <th class="text-center">Type of Movement</th>
+            <th class="text-center">Reason of Movement</th>
+            <th class="text-center">Number of Birds</th>
+            <th class="text-center">Remarks</th>
+
+          </tr>
+        </thead>
+        <tbody>
+
+          {% for data in layers_inventory_data.all %}
+          <tr>
+            <td class="font-weight-light">{{data.stock_date_1}}</td>
+            <td class="font-weight-light">{{data.enterprise_unit}}</td>
+            <td class="font-weight-light">{{data.section}}</td>
+            <td class="font-weight-light">{{data.staff}}</td>
+            <td class="font-weight-light text-center">{{data.stock_movement_type}}</td>
+            <td class="font-weight-light text-center">{{data.stock_movement_reason}}</td>
+            <td class="font-weight-light text-center">{{data.birds}}</td>
+            <td class="font-weight-light text-center">{{data.stock_movement_notes}}</td>
+          {% endfor %}
+
+          </tr>
+
+
+        </tbody>
+      </table>
+    </div>
+
+
+    </div> -->
+    </div>
+
+{% endblock %}

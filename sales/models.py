@@ -18,7 +18,7 @@ class Sales(models.Model):
         return total
 
     def date1(self):
-        return self.date.strftime('%e %b %y')
+        return self.date.strftime('%d %b %y')
 
     def __str__(self):
         return self.customer

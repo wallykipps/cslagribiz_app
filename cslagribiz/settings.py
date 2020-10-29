@@ -32,17 +32,26 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'dashboard.apps.DashboardConfig',
-    'production.apps.ProductionConfig',
+    #'production.apps.ProductionConfig',
     'expenses.apps.ExpensesConfig',
     'sales.apps.SalesConfig',
     'customers.apps.CustomersConfig',
+    'enterprise.apps.EnterpriseConfig',
+    'layers.apps.LayersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    'bootstrap_modal_forms',
+    'crispy_forms',
+    'widget_tweaks',
+    'import_export'
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

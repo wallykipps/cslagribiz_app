@@ -1,0 +1,35 @@
+{% extends "dashboard/layout.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-lg-6 pt-4">
+    <h3><i class="fas fa-users mr-3"></i>Update Customer</h3>
+
+  </div>
+
+  <div class="container col-lg-6 pt-4" >
+
+    <a href="{% url 'customers'%}" class="btn btn-outline-primary btn-sm mr-1 float-right ml-1" role="button"> <i class="iconify" data-icon="mdi:refresh-circle" data-inline="false" data-height="18"></i>Refresh</a>
+    <a href="{% url 'sales'%}" class="btn btn-outline-secondary btn-sm ml-1 float-right mr-1" role="button"><i class="fas fa-table mr-2"></i>Sales Records</a>
+    <button type="button" class="btn btn-outline-success btn-sm ml-1 float-right mr-1" data-toggle="modal" data-target="#customerReg" type="reset"><i class="iconify" data-icon="gridicons:add" data-inline="false" data-height="18"></i>Add Customer</button>
+  </div>
+
+</div>
+<hr></hr>
+<form class ="form-inline" method="post" id="editCustomerForm" style="width:100%" novalidate>
+  {% csrf_token %}
+
+  <!-- <table>
+  {{form.as_table}}
+</table> -->
+<div class="col-sm-12 mb-5 mt-5">
+  <h5>Are you sure you want to delete {{customer.firstname}} {{customer.lastname}}?</h5>
+</div>
+
+<div class="col-sm-12">
+  <button class="btn btn-danger ml-2" type="submit" id="deletecustomerBtn" ><i class="fas fa-trash-alt"></i> Delete</button>
+  <a href="{% url 'layers_customers'%}" class="btn btn-secondary" role="button"><i class="fas fa-undo-alt"></i> Cancel</a>
+  <!-- <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button> -->
+</div>
+
+</form>
+{% endblock %}

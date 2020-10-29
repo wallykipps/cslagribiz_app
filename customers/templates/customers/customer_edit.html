@@ -1,0 +1,99 @@
+
+<form class ="form-inline" method="post" id="customerform" style="width:100%" action="{% url 'editcustomer' customer.id %}">
+  {% csrf_token %}
+  <!-- The Modal -->
+  <div class="modal" id="customerUpdate">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Customer Registration Form</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+
+          <div class="col-sm-12">
+            <label class="sr-only" for="date">Date</label>
+            <div class="input-group mb-2 mr-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+              </div>
+              <input type="date" class="form-control" id="date" name="date" value="{{customer.reg_date|date:"Y-m-d"}}" placeholder="Date" required>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label class="sr-only" for="firstname">First Name</label>
+            <div class="input-group mb-2 mr-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-user"></i></div>
+              </div>
+              <input type="text" class="form-control" id="firstname" name="firstname"  value="{{customer.firstname}}" placeholder="First Name" required>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label class="sr-only" for="lastname">Last Name</label>
+            <div class="input-group mb-2 mr-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-user"></i></div>
+              </div>
+              <input type="text" class="form-control" id="lastname" name="lastname" value="{{customer.lastname}}" placeholder="Last Name" required>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label class="sr-only" for="phonenumber">Phone Number</label>
+            <div class="input-group mb-2 mr-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-mobile-alt"></i></div>
+              </div>
+              <input type="text" class="form-control" id="phonenumber" name="phonenumber" value="{{customer.phonenumber}}" placeholder="Phone Number" required>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label class="sr-only" for="email">Email Address</label>
+            <div class="input-group mb-2 mr-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-at"></i></div>
+              </div>
+              <input type="text" class="form-control" id="email" name="email"  value="{{customer.email}}" placeholder="Email" required>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label class="sr-only" for="location">Location</label>
+            <div class="input-group mb-2 mr-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class=" 	fas fa-map-marker-alt"></i></div>
+              </div>
+              <input type="text" class="form-control" id="location" name="location" value="{{customer.location}}" placeholder="Location" required>
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label class="sr-only" for="customername">Customer Name</label>
+            <div class="input-group mb-2 mr-2 d.none">
+              <div class="input-group-prepend d-none">
+                <div class="input-group-text d.none"><i class=" 	fas fa-map-marker-alt"></i></div>
+              </div>
+              <input type="text" class="form-control d-none" id="customername" name="customername"  value="{{customer.customername}}" placeholder="Customer Name" value="" required>
+            </div>
+          </div>
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button class="btn btn-primary ml-2" type="submit" id="btnSubmit" onclick="combineFunction()"  onclick="myRefresh">Submit</button>
+          <button class="btn btn-danger ml-2" id="btnReset" type="reset">Reset</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</form>

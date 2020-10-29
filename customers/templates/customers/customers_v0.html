@@ -1,0 +1,487 @@
+{% extends "dashboard/layout.html" %}
+{% block content %}
+
+<div class="row">
+  <div class="col-lg-6 pt-4">
+    <h3><i class="fas fa-users mr-3"></i>Customers</h3>
+
+  </div>
+
+  <div class="container col-lg-6 pt-4" >
+
+    <a href="{% url 'customers'%}" class="btn btn-outline-primary btn-sm mr-1 float-right ml-1" role="button"> <i class="iconify" data-icon="mdi:refresh-circle" data-inline="false" data-height="18"></i>Refresh</a>
+    <a href="{% url 'sales'%}" class="btn btn-outline-secondary btn-sm ml-1 float-right mr-1" role="button"><i class="fas fa-table mr-2"></i>Sales Records</a>
+    <a class="btn btn-outline-success btn-sm ml-1 float-right mr-1 add_Modal" href="{% url 'add_customer_modal' %}" id="addCustomerBtn"><i class="iconify" data-icon="gridicons:add" data-inline="false" data-height="18"></i>Add Customer</a>
+  </div>
+
+</div>
+<hr></hr>
+
+<!-- <form method="post">
+  {{form.as_p}}
+  <input type="submit" name="Submit">
+</form> -->
+
+<!-- {% url 'add_customer_modal' %} -->
+<form class ="form-inline" method="post" id="addCustomerForm" style="width:100%" action="#">
+  {% csrf_token %}
+  <div id="customerAdd" class="modal fade text-center">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Customer Registration Form</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="col-sm-12">
+            <label class="sr-only" for="date">Date</label>
+            <div class="input-group mb-2 mr-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+              </div>
+              {{form.reg_date}}
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label class="sr-only" for="firstname">First Name</label>
+            <div class="input-group mb-2 mr-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-user"></i></div>
+              </div>
+              {{form.firstname}}
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label class="sr-only" for="lastname">Last Name</label>
+            <div class="input-group mb-2 mr-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-user"></i></div>
+              </div>
+              {{form.lastname}}
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label class="sr-only" for="phonenumber">Phone Number</label>
+            <div class="input-group mb-2 mr-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fas fa-mobile-alt"></i></div>
+              </div>
+              {{form.phonenumber}}
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label class="sr-only" for="email">Email Address</label>
+            <div class="input-group mb-2 mr-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class="fa fa-at"></i></div>
+              </div>
+              {{form.email}}
+            </div>
+          </div>
+
+          <div class="col-sm-12">
+            <label class="sr-only" for="location">Location</label>
+            <div class="input-group mb-2 mr-2">
+              <div class="input-group-prepend">
+                <div class="input-group-text"><i class=" 	fas fa-map-marker-alt"></i></div>
+              </div>
+              {{form.location}}
+            </div>
+          </div>
+
+        </div>
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button class="btn btn-primary ml-2" type="submit" id="btnSubmit" >Submit</button>
+          <button class="btn btn-danger ml-2" id="btnReset" type="reset">Reset</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<form method="POST" id="customerEditFormModal" style="width:100%" action="{% url 'editcustomermodal'%}">
+{% csrf_token %}
+<!-- The Modal -->
+<div class="modal fade" id="customerEdit" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Update Customer</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+
+        <div class="col-sm-12">
+          <label class="sr-only" for="date">Date</label>
+          <div class="input-group mb-2 mr-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+            </div>
+            <input type="date" class="datepicker form-control" id="date" name="date"  placeholder="Date" required>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <label class="sr-only" for="firstname">First Name</label>
+          <div class="input-group mb-2 mr-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-user"></i></div>
+            </div>
+            <input type="text" class="form-control" id="firstname" name="firstname" value="" placeholder="First Name" required>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <label class="sr-only" for="lastname">Last Name</label>
+          <div class="input-group mb-2 mr-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-user"></i></div>
+            </div>
+            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" required>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <label class="sr-only" for="phonenumber">Phone Number</label>
+          <div class="input-group mb-2 mr-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fas fa-mobile-alt"></i></div>
+            </div>
+            <input type="text" class="form-control" id="phonenumber" name="phonenumber" placeholder="Phone Number" required>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <label class="sr-only" for="email">Email Address</label>
+          <div class="input-group mb-2 mr-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class="fa fa-at"></i></div>
+            </div>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+          </div>
+        </div>
+
+        <div class="col-sm-12">
+          <label class="sr-only" for="location">Location</label>
+          <div class="input-group mb-2 mr-2">
+            <div class="input-group-prepend">
+              <div class="input-group-text"><i class=" 	fas fa-map-marker-alt"></i></div>
+            </div>
+            <input type="text" class="form-control" id="location" name="location" placeholder="Location" required>
+          </div>
+        </div>
+
+
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-info" id="update">Update</button>
+        <button class="btn btn-primary ml-2" type="submit" id="btnSubmit" onclick="combineFunction()" onclick="myRefresh()">Submit</button>
+        <button class="btn btn-danger ml-2" id="btnReset" type="reset" data-dismiss="modal">Reset</button>
+        <button type="button reset" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+</form>
+
+
+<form class ="form-inline" method="post" id="editCustomerForm" style="width:100%" action="#">
+  {% csrf_token %}
+
+  <div class="modal" id="editCustomerModal" tabindex="-1" caller-id="" role="dialog"">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+            <div class="col-sm-12">
+              <label class="sr-only" for="date">Date</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                </div>
+              <input type="date" class="form-control" id="reg_date_update" name="date" value="{{customer.reg_date|date:"Y-m-d"}}" placeholder="Date" required>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <label class="sr-only" for="firstname">First Name</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-user"></i></div>
+                </div>
+                <input type="text" class="form-control" id="firstname_update" name="firstname"  value="{{customer.firstname}}" placeholder="First Name" required>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <label class="sr-only" for="lastname">Last Name</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-user"></i></div>
+                </div>
+                <input type="text" class="form-control" id="lastname_update" name="lastname" value="{{customer.lastname}}" placeholder="Last Name" required>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <label class="sr-only" for="phonenumber">Phone Number</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-mobile-alt"></i></div>
+                </div>
+                <input type="text" class="form-control" id="phonenumber_update" name="phonenumber" value="{{customer.phonenumber}}" placeholder="Phone Number" required>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <label class="sr-only" for="email">Email Address</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-at"></i></div>
+                </div>
+                <input type="text" class="form-control" id="email_update" name="email"  value="{{customer.email}}" placeholder="Email" required>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <label class="sr-only" for="location">Location</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-map-marker-alt"></i></div>
+                </div>
+                <input type="text" class="form-control" id="location_update" name="location" value="{{customer.location}}" placeholder="Location" required>
+              </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary ml-2" type="submit" id="updateBtn" >Submit</button>
+          <button class="btn btn-danger ml-2" id="btnReset" type="reset">Reset</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+  </form>
+
+
+
+<form class ="form-inline" method="post" id="editCustomerForm" style="width:100%" action="#">
+  {% csrf_token %}
+
+  <div class="modal" id="editCustomerModal" tabindex="-1" caller-id="" role="dialog"">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+            <div class="col-sm-12">
+              <label class="sr-only" for="date">Date</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                </div>
+              <input type="date" class="form-control" id="reg_date_update" name="date" value="{{customer.reg_date|date:"Y-m-d"}}" placeholder="Date" required>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <label class="sr-only" for="firstname">First Name</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-user"></i></div>
+                </div>
+                <input type="text" class="form-control" id="firstname_update" name="firstname"  value="{{customer.firstname}}" placeholder="First Name" required>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <label class="sr-only" for="lastname">Last Name</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-user"></i></div>
+                </div>
+                <input type="text" class="form-control" id="lastname_update" name="lastname" value="{{customer.lastname}}" placeholder="Last Name" required>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <label class="sr-only" for="phonenumber">Phone Number</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-mobile-alt"></i></div>
+                </div>
+                <input type="text" class="form-control" id="phonenumber_update" name="phonenumber" value="{{customer.phonenumber}}" placeholder="Phone Number" required>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <label class="sr-only" for="email">Email Address</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fa fa-at"></i></div>
+                </div>
+                <input type="text" class="form-control" id="email_update" name="email"  value="{{customer.email}}" placeholder="Email" required>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <label class="sr-only" for="location">Location</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-map-marker-alt"></i></div>
+                </div>
+                <input type="text" class="form-control" id="location_update" name="location" value="{{customer.location}}" placeholder="Location" required>
+              </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary ml-2" type="submit" id="updateBtn" >Submit</button>
+          <button class="btn btn-danger ml-2" id="btnReset" type="reset">Reset</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+
+          </div>
+      </div>
+    </div>
+  </div>
+  </form>
+
+  <div class="modal fade" id="modal-default">
+      <div class="modal-dialog">
+          {% if customer %} <!-- this company instance will come from AJAX -->
+              <form method="post" action="{% url 'delete_customer_modal' id=customer.id %}">
+              {% csrf_token %}
+
+              <div class="modal-content">
+                  <div class="modal-body">
+                      <input type="text" name="name" maxlength="100" required="" id="id_name" value="{{ customer.id }}">
+                      <input type="submit" class="btn btn-primary" value="Delete">
+                  </div>
+              </div>
+              </form>
+          {% endif %}
+      </div>
+  </div>
+
+
+<div class="row ml-2">
+  <h5 class="text-secondary">Customers:</h5>
+</div>
+<hr class ="mt-0"></hr>
+
+<!-- <div class="row ml-2 mb-0 mr-0">
+  <div class="col-lg-9">
+
+  </div>
+  <div class="col-lg-3">
+    <label for="myCustomer">Search:
+      <input class="form-control-sm m-2" id="myCustomer" type="text" placeholder="Search..">
+    </label>
+
+  </div>
+</div> -->
+
+<div class="container-fluid col-lg-12">
+  <!--<a href="#" class="btn btn-success" id="menu-toggle">Toggle Menu</span></a>-->
+  <div class="table-responsive">
+    <table class="table table-striped table-sm border" id="customers" data-toggle="table"   data-pagination="true" data-search="true">
+      <thead class="table-secondary">
+        <tr>
+          <th class="d-none">Registration Date</th>
+          <th data-sortable="true" >Registration Date</th>
+          <th data-sortable="true" >Customer Name</th>
+          <th data-sortable="true" >Phone Number</th>
+          <th data-sortable="true" >Email</th>
+          <th data-sortable="true" >Location</th>
+          <th class="text-center">Action</th>
+
+
+        </tr>
+      </thead>
+      <tbody>
+
+        {% for customer in customers.all %}
+        <tr>
+          <td class="font-weight-light d-none" >{{customer.reg_date_1}}</td>
+          <td class="font-weight-light">{{customer.reg_date_2}}</td>
+          <td class="font-weight-light">{{customer.customername}}</td>
+          <td class="font-weight-light">{{customer.phonenumber}}</td>
+          <td class="font-weight-light">{{customer.email}}</td>
+          <td class="font-weight-light">{{customer.location}}</td>
+          <td class="text-center">
+            <a class="btn btn-outline-success border-0 btn-sm" href="{% url 'editcustomer' customer.id %}">
+              <i class="far fa-edit" data-toggle="tooltip" title="edit" data-placement="right"></i>
+            </a>
+
+            <a href="{% url 'deletecustomer' customer.id %}"  class="btn btn-outline-danger border-0 btn-sm">
+              <i class="far fa-trash-alt" data-toggle="tooltip" title="delete" data-placement="right"></i>
+            </a>
+
+            <!-- <button type="button" class="btn btn-outline-primary border-0 btn-sm" id="updateModal"  url="{% url 'editcustomer' customer.id %}"
+            data-toggle="modal"
+            data-target="#customerEdit"
+            data-id="{{customer.id}}"
+            data-reg_date_1="{{customer.reg_date_1}}"
+            data-firstname="{{customer.firstname}}"
+            data-lastname="{{customer.lastname}}"
+            data-phonenumber="{{customer.phonenumber}}"
+            data-email="{{customer.email}}"
+            data-location="{{customer.location}}">
+            <i class="far fa-edit" data-toggle="tooltip" title="edit" data-placement="right"></i>
+            </button>
+
+            <button type="button" class="btn btn-outline-secondary border-0 btn-sm editBtn" id="{{customer.id}}"  url="{% url 'editcustomer' customer.id %}">
+            <i class="far fa-edit" data-toggle="tooltip" title="edit" data-placement="right"></i>
+            </button>
+
+            <button data-id="{{customer.id}}" data-url="{% url 'delete_customer_modal' customer.id %}" type="button" class="btn btn-warning margin-bottom delete-customer" >
+      delete
+  </button>
+
+  <button data-id="{{customer.id}}" data-url="{% url 'update_customer_modal' customer.id %}" type="button" class="btn btn-warning margin-bottom update-customer" >
+edit
+</button> -->
+
+  <!-- <a class="btn btn-outline-success btn-sm ml-1 float-right mr-1" href="{% url 'update_customer_modal' customer.id %}" id="updateCustomerBtn"><i class="iconify" data-icon="gridicons:add" data-inline="false" data-height="18"></i>Edit</a> -->
+
+        </tr>
+        {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+{% endblock %}

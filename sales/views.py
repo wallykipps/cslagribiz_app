@@ -13,7 +13,7 @@ def salesform(request):
 def postsale(request):
     print(request.method)
     if(request.method)=="POST":
-        print("Sucess!")
+        #print("Sucess!")
         date=request.POST.get("date")
         customer=request.POST.get("customer")
         phonenumber=request.POST.get("phonenumber")
@@ -25,9 +25,10 @@ def postsale(request):
         unitprice=request.POST.get("unitprice")
         salesperson=request.POST.get("salesperson")
         paymentmode=request.POST.get("paymentmode")
-        print(date,customer,phonenumber,email,location,product,units,unitmeasure,unitprice,salesperson,paymentmode)
+        # print(date,customer,phonenumber,email,location,product,units,unitmeasure,unitprice,salesperson,paymentmode)
         salerecord=Sales(date=date,customer=customer,phonenumber=phonenumber,location=location,
                          email=email,product=product,units=units,unitmeasure=unitmeasure,
                          unitprice=unitprice,salesperson=salesperson,paymentmode=paymentmode)
         salerecord.save()
-    return render (request, 'sales/sales_form.html')
+        sales=Sales.objects
+    return render (request, 'sales/sales.html',{'sales':sales})

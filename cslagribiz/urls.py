@@ -17,8 +17,12 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+import dashboard.views
 import sales.views
 import customers.views
+import production.views
+import enterprise.views
+import layers.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,4 +30,8 @@ urlpatterns = [
     path('',include('dashboard.urls')),
     path('sales/',include('sales.urls')),
     path('customers/',include('customers.urls')),
+    path('production/',include('production.urls')),
+    #path('enterprise/',include('enterprise.urls')),
+    path('layers/',include('layers.urls')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

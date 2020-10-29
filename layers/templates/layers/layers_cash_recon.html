@@ -1,0 +1,324 @@
+{% extends "dashboard/layout.html" %}
+{% block content %}
+{% load humanize %}
+
+
+<div class="row">
+  <div class="col-5 pt-4">
+    <h3><i class="fas fa-table mr-3"></i>Cash Deposits & Balances</h3>
+  </div>
+
+  <div class="container col-7 pt-4" >
+    <button type="button" class="btn btn-outline-secondary btn-sm mr-1 float-right ml-1 "data-toggle="modal" data-target="#layers_cash_deposit"> <i class="fas fa-download mr-2"></i>Cash Deposits</button>
+    <button type="button" class="btn btn-outline-primary btn-sm mr-1 float-right ml-1 "data-toggle="modal" data-target="#layers_cash_reconciliation"> <i class="fas fa-download mr-2"></i>Cash Reconciliation</button>
+    <!-- <a href="{%url 'layers_customers'%}" class="btn btn-outline-primary btn-sm ml-1 float-right mr-1" role="button"><i class="fas fa-users mr-2"></i>Customers</a> -->
+    <a class="btn btn-outline-success btn-sm ml-1 float-right mr-1 modal_input_status" href="{% url 'add_layers_cash_deposit' %}" data-toggle="modal" data-target="#layersDeposit" id="layersDepositBtn"><i class="iconify" data-icon="gridicons:add" data-inline="false" data-height="18"></i>Add Deposit</a>
+  </div>
+
+</div>
+<hr></hr>
+
+
+
+  <!-- The Modal -->
+  <div class="modal fade" id="layersDeposit">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Cash Balance/Deposit Form</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <div class="custom-control custom-checkbox ml-3">
+          <input type="checkbox" class="custom-control-input inputstatusChkBx" id="inputStatusChkBx" value="">
+          <label class="custom-control-label  text-muted" for="inputStatusChkBx">Click to enable or disable actual stock count!</label>
+        </div>
+
+        <form method="post" id="layersDepositForm" action="{% url 'add_layers_cash_deposit'%}">
+          {% csrf_token %}
+
+        <!-- Modal body -->
+        <div class="modal-body">
+
+          <div class="form-row ml-1">
+            <h5 class="text-secondary">Enterprise Details:</h5>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="sr-only" for="date">Date</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+                </div>
+                {{layers_deposit_form.deposit_date}}
+              </div>
+            </div>
+
+
+          </div>
+
+            <div class="row">
+              <div class="col">
+                <label class="sr-only" for="salesperson">Sales Person</label>
+                <div class="input-group mb-2 mr-2">
+                  <div class="input-group-prepend">
+                    <div class="input-group-text"><i class="far fa-user-circle"></i></div>
+                  </div>
+                  {{layers_deposit_form.staff}}
+                </div>
+              </div>
+
+              </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="sr-only" for="enterprise_type">Enterprise Type</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-industry"></i></div>
+                </div>
+                {{layers_deposit_form.enterprise_type}}
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <label class="sr-only" for="enterprise_unit">Enterprise Unit</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-igloo"></i></div>
+                </div>
+                {{layers_deposit_form.section}}
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-row mt-2 ml-1">
+            <h5 class="text-secondary">Actual Cash Balance:</h5>
+          </div>
+
+          <div class="row">
+
+            <div class="col">
+              <label class="sr-only" for="cash_balance">Cash Balance</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-crow"></i></div>
+                </div>
+                {{layers_deposit_form.cash_balance}}
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-row mt-2 ml-1">
+            <h5 class="text-secondary">Deposit Details:</h5>
+          </div>
+
+          <div class="row">
+
+            <div class="col">
+              <label class="sr-only" for="deposit_amount">Deposit Amount</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-crow"></i></div>
+                </div>
+                  {{layers_deposit_form.deposit_amount}}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label class="sr-only" for="depositpoint">Deposit Point</label>
+              <div class="input-group mb-2 mr-2">
+                <div class="input-group-prepend">
+                  <div class="input-group-text"><i class="fas fa-crow"></i></div>
+                </div>
+                {{layers_deposit_form.cashpoint}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+
+          <button class="btn btn-success ml-2" type="submit" id="btnSubmit"><i class="fas fa-save"></i> Submit</button>
+          <button class="btn btn-warning ml-2" id="btnReset" type="reset"><i class="fas fa-undo-alt"></i> Reset</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times-circle"></i> Close</button>
+
+        </div>
+
+          </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+<!-- Cash Deposit -->
+<div class="modal fade modal" id='layers_cash_deposit' tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h4 class="modal-title">Cash Deposits</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped table-sm border" id="sales" data-toggle="table"   data-pagination="true" data-search="true">
+          <thead class="table-secondary">
+            <tr>
+              <th>Date</th>
+              <th>Enterprise Unit</th>
+              <th>Depositor</th>
+              <th>Deposit Point</th>
+              <th class="text-right">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for obj in layers_deposit_data %}
+
+            <tr>
+
+              <td class="font-weight-light">{{obj.deposit_date_1}}</td>
+              <td class="font-weight-light">{{obj.section}}</td>
+              <td class="font-weight-light">{{obj.staff}}</td>
+              <td class="font-weight-light">{{obj.cashpoint}}</td>
+              <td class="font-weight-light text-right">{{obj.deposit_amount|floatformat:0|intcomma}}</td>
+
+            </tr>
+      {% endfor %}
+          </tbody>
+        </table>
+        </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Cash Flow -->
+<div class="modal fade modal" id='layers_cash_reconciliation' tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+
+    <div class="modal-content p-3">
+      <div class="modal-header">
+        <h4 class="modal-title">Daily Cash Flow Reconciliation</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped table-sm border" id="sales" data-toggle="table"   data-pagination="true" data-search="true">
+          <thead class="table-secondary">
+            <tr>
+              <th>Date</th>
+              <th>Enterprise Unit</th>
+              <th>Cashflow Type</th>
+              <th>Category</th>
+              <th class="text-center">Cash In</th>
+              <th class="text-center">Cash Out</th>
+              <th class="text-center">Cashflow(Expected)</th>
+              <th class="text-center">Cash Deposit</th>
+              <th class="text-center">Cashflow(Actual)</th>
+              <th class="text-center">Outstanding Deposit</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            {% for obj in layers_cash_balance%}
+
+            <tr>
+
+              <td class="font-weight-light">{{obj.date}}</td>
+              <td class="font-weight-light">{{obj.section}}</td>
+              <td class="font-weight-light">{{obj.type}}</td>
+              <td class="font-weight-light">{{obj.category}}</td>
+              <td class="font-weight-light text-center">{{obj.cash_in|floatformat:0|intcomma}}</td>
+              <td class="font-weight-light text-center">{{obj.cash_out|floatformat:0|intcomma}}</td>
+              <td class="font-weight-light text-center">{{obj.cash_balance|floatformat:0|intcomma}}</td>
+              <td class="font-weight-light text-center">{{obj.deposit_amount|floatformat:0|intcomma}}</td>
+              <td class="font-weight-light text-center">{{obj.cash_balance_actual|floatformat:0|intcomma}}</td>
+                <td class="font-weight-light text-center">{{obj.deposit_balance|floatformat:0|intcomma}}</td>
+
+            </tr>
+      {% endfor %}
+          </tbody>
+        </table>
+        </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row">
+  <div class="col">
+
+    <div class="table-responsive">
+      <table class="table table-striped table-sm border" id="sales" data-toggle="table"   data-pagination="true" data-search="true">
+        <thead class="table-secondary">
+          <tr>
+            <th>Date</th>
+            <th>Enterprise Unit</th>
+            <th>Cashflow Type</th>
+            <th>Category</th>
+            <th class="text-center">Cash In</th>
+            <th class="text-center">Cash Out</th>
+            <th class="text-center">Cashflow(Expected)</th>
+            <th class="text-center">Cash Deposit</th>
+            <th class="text-center">Cashflow(Actual)</th>
+            <th class="text-center">Outstanding Deposit</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {% for obj in layers_cash_flow %}
+
+          <tr>
+
+            <td class="font-weight-light">{{obj.month}}</td>
+            <td class="font-weight-light">{{obj.section}}</td>
+            <td class="font-weight-light">{{obj.type}}</td>
+            <td class="font-weight-light">{{obj.category}}</td>
+            <td class="font-weight-light text-center">{{obj.cash_in|floatformat:0|intcomma}}</td>
+            <td class="font-weight-light text-center">{{obj.cash_out|floatformat:0|intcomma}}</td>
+            <td class="font-weight-light text-center">{{obj.cash_balance|floatformat:0|intcomma}}</td>
+            <td class="font-weight-light text-center">{{obj.deposit_amount|floatformat:0|intcomma}}</td>
+            <td class="font-weight-light text-center">{{obj.cash_balance_actual|floatformat:0|intcomma}}</td>
+            <td class="font-weight-light text-center">{{obj.deposit_balance|floatformat:0|intcomma}}</td>
+
+          </tr>
+    {% endfor %}
+        </tbody>
+      </table>
+      </div>
+
+</div>
+</div>
+
+
+
+
+<div class="row">
+  <div class="col">
+
+    {{html1|safe}}
+    <br></br>
+    {{html2|safe}}
+
+  </div>
+</div>
+{% endblock %}

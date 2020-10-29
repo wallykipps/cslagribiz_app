@@ -1,0 +1,90 @@
+{% extends "dashboard/layout.html" %}
+{% block content %}
+<div class="row">
+  <div class="col-lg-6 pt-4">
+    <h3><i class="fas fa-users mr-3"></i>Update Customer</h3>
+
+  </div>
+
+  <div class="container col-lg-6 pt-4" >
+
+    <a href="{% url 'customers'%}" class="btn btn-outline-primary btn-sm mr-1 float-right ml-1" role="button"> <i class="iconify" data-icon="mdi:refresh-circle" data-inline="false" data-height="18"></i>Refresh</a>
+    <a href="{% url 'sales'%}" class="btn btn-outline-secondary btn-sm ml-1 float-right mr-1" role="button"><i class="fas fa-table mr-2"></i>Sales Records</a>
+    <button type="button" class="btn btn-outline-success btn-sm ml-1 float-right mr-1" data-toggle="modal" data-target="#customerReg" type="reset"><i class="iconify" data-icon="gridicons:add" data-inline="false" data-height="18"></i>Add Customer</button>
+  </div>
+
+</div>
+<hr></hr>
+<form class ="form-inline" method="post" id="editCustomerForm" style="width:100%" action="{% url 'updatecustomer' customer.id %}">
+  {% csrf_token %}
+  <div class="row">
+
+    <div class="col-sm-12">
+      <label class="sr-only" for="date">Date</label>
+      <div class="input-group mb-2 mr-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fas fa-calendar-alt"></i></div>
+        </div>
+        <input type="date" class="form-control" id="date" name="date" value="{{customer.reg_date|date:"Y-m-d"}}" placeholder="Date" required>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <label class="sr-only" for="firstname">First Name</label>
+      <div class="input-group mb-2 mr-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fas fa-user"></i></div>
+        </div>
+        <input type="text" class="form-control" id="firstname" name="firstname"  value="{{customer.firstname}}" placeholder="First Name" required>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <label class="sr-only" for="lastname">Last Name</label>
+      <div class="input-group mb-2 mr-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fas fa-user"></i></div>
+        </div>
+        <input type="text" class="form-control" id="lastname" name="lastname" value="{{customer.lastname}}" placeholder="Last Name" required>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <label class="sr-only" for="phonenumber">Phone Number</label>
+      <div class="input-group mb-2 mr-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fas fa-mobile-alt"></i></div>
+        </div>
+        <input type="text" class="form-control" id="phonenumber" name="phonenumber" value="{{customer.phonenumber}}" placeholder="Phone Number" required>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <label class="sr-only" for="email">Email Address</label>
+      <div class="input-group mb-2 mr-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa fa-at"></i></div>
+        </div>
+        <input type="text" class="form-control" id="email" name="email"  value="{{customer.email}}" placeholder="Email" required>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+      <label class="sr-only" for="location">Location</label>
+      <div class="input-group mb-2 mr-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class=" 	fas fa-map-marker-alt"></i></div>
+        </div>
+        <input type="text" class="form-control" id="location" name="location" value="{{customer.location}}" placeholder="Location" required>
+      </div>
+    </div>
+
+    <div class="col-sm-12">
+    <button class="btn btn-primary ml-2" type="submit" id="btnSubmit" >Submit</button>
+    <button class="btn btn-danger ml-2" id="btnReset" type="reset">Reset</button>
+    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+  </div>
+  </div>
+
+  </form>
+{% endblock %}
